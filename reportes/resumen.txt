@@ -1,0 +1,7 @@
+=== REPORTE DE INVENTARIO ===
+Total de registros validos: 5
+Total de registros invalidos: 3
+Valor total del inventario: Q7179.00
+
+=== RESULTADO DE BUSQUEDA ===
+El producto con codigo P006 no existe en el inventario.

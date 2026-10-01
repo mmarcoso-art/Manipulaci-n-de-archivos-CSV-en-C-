@@ -1,0 +1,50 @@
+INICIO
+    ABRIR archivo "datos/productos.csv"
+    SI el archivo NO se puede abrir ENTONCES
+        MOSTRAR "Error al abrir el archivo"
+        TERMINAR programa
+    FIN SI
+
+    INICIALIZAR validos = 0, invalidos = 0, total_inventario = 0
+    LEER y OMITIR la primera línea (encabezado)
+    
+    PEDIR al usuario "codigo_buscar"
+    INICIALIZAR encontrado = FALSO, mensaje_busqueda = "No existe"
+
+    MIENTRAS haya líneas en el archivo HACER
+        LEER línea
+        SEPARAR línea por comas en: codigo, nombre, precio, existencia
+        
+        SI codigo está vacío O nombre está vacío ENTONCES
+            invalidos = invalidos + 1
+            CONTINUAR a la siguiente línea
+        FIN SI
+
+        INTENTAR (Try)
+            CONVERTIR precio a número decimal
+            CONVERTIR existencia a número entero
+            
+            SI precio > 0 Y existencia >= 0 ENTONCES
+                validos = validos + 1
+                total_inventario = total_inventario + (precio * existencia)
+                
+                SI codigo es igual a codigo_buscar ENTONCES
+                    encontrado = VERDADERO
+                    mensaje_busqueda = "Datos del producto encontrado"
+                FIN SI
+            SINO
+                invalidos = invalidos + 1
+            FIN SI
+        CAPTURAR ERROR (Catch)
+            invalidos = invalidos + 1
+        FIN INTENTAR
+    FIN MIENTRAS
+
+    CERRAR archivo "datos/productos.csv"
+    
+    MOSTRAR mensaje_busqueda en pantalla
+    
+    CREAR archivo "reportes/resumen.txt"
+    ESCRIBIR en archivo: validos, invalidos, total_inventario, mensaje_busqueda
+    CERRAR archivo "reportes/resumen.txt"
+FIN
